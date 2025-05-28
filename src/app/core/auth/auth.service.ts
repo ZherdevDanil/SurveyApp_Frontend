@@ -33,15 +33,15 @@ export class AuthService {
   }
 
   saveToken(token: string): void {
-    localStorage.setItem('auth_token', token);
+    localStorage.setItem('token', token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem('auth_token');
+    return localStorage.getItem('token');
   }
 
   logout(): void {
-    localStorage.removeItem('auth_token');
+    localStorage.removeItem('token');
   }
 
   isLoggedIn(): boolean {

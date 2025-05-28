@@ -1,0 +1,14 @@
+<h2>Мої опитування</h2>
+
+<div *ngIf="surveys.length === 0">
+  <p>У вас ще немає опитувань.</p>
+</div>
+
+<ul *ngIf="surveys.length > 0">
+  <li *ngFor="let survey of surveys">
+    <strong>{{ survey.title }}</strong> — {{ survey.description }}
+    <div>
+      <a [routerLink]="['/survey-results', survey.id]">Переглянути результати</a>
+    </div>
+  </li>
+</ul>
