@@ -13,6 +13,7 @@ import { MySurveysComponent } from './features/my-surveys/my-surveys.component';
 import { CreateSurveyComponent } from './features/create-survey/create-survey.component';
 import { SurveyPassComponent } from './features/survey-pass/survey-pass.component';
 import { SurveyResultsComponent } from './features/survey-results/survey-results.component';
+import { SurveyDetailsComponent } from './features/survey-details/survey-details.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { SurveyResultsComponent } from './features/survey-results/survey-results
     MySurveysComponent,
     CreateSurveyComponent,
     SurveyPassComponent,
-    SurveyResultsComponent
+    SurveyResultsComponent,
+    SurveyDetailsComponent
   ],
   imports: [
     BrowserModule,

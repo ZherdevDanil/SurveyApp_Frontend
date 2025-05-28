@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Survey, SurveyService } from 'src/app/core/services/survey.service';
-
+import {  SurveyService } from 'src/app/core/services/survey.service';
+import { Router } from '@angular/router';
+import { Survey } from 'src/app/core/models/survey.model';
 @Component({
   selector: 'app-my-surveys',
   templateUrl: './my-surveys.component.html',
@@ -8,7 +9,11 @@ import { Survey, SurveyService } from 'src/app/core/services/survey.service';
 })
 export class MySurveysComponent implements OnInit{
   surveys: Survey[] = [];
-  constructor(private surveyService: SurveyService){}
+  constructor(private surveyService: SurveyService,private router:Router){}
+
+  viewDetails(id:number){
+    this.router.navigate(['/survey-details',id])
+  }
   
   ngOnInit(): void {
       this.surveyService.getMySurveys().subscribe({

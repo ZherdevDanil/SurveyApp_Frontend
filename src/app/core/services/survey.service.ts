@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { Survey } from '../models/survey.model';
 
-export interface Survey {
+/*export interface Survey {
   id: number;
   title: string;
   description: string;
   requireAuth: boolean;
   createdAt: string;
-}
+}*/
 
 
 export interface CreateSurveyRequest {
@@ -34,6 +35,7 @@ export interface QuestionRequest {
 })
 export class SurveyService {
   private baseUrl = 'http://localhost:8080/api/surveys';
+  
 
   
 
@@ -46,6 +48,14 @@ export class SurveyService {
 
   createSurvey(request: CreateSurveyRequest): Observable<any> {
   return this.http.post(`${this.baseUrl}`, request);
+}
+
+getSurveyById(id:number): Observable<Survey>{
+    return this.http.get<Survey>(`${this.baseUrl}/${id}`);
+}
+
+updateQuestion(questionId:number, data:QuestionRequest):Observable<any>{
+    return this.http.put<any>(`http://localhost:8080/api/questions/${questionId}`,data);
 }
 
 }

@@ -6,7 +6,7 @@
 
 <ul *ngIf="surveys.length > 0">
   <li *ngFor="let survey of surveys">
-    <strong>{{ survey.title }}</strong> — {{ survey.description }}
+    <strong><button (click)="viewDetails(survey.id)">{{ survey.title }}</button></strong> — {{ survey.description }}
     <div>
       <a [routerLink]="['/survey-results', survey.id]">Переглянути результати</a>
     </div>

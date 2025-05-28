@@ -2,20 +2,8 @@ import { Injectable } from '@angular/core';
 import {HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tick } from '@angular/core/testing';
-
-
-
-interface LoginRequest{
-  username: string;
-  password: string;
-}
-
-interface RegisterRequest{
-  username: string;
-  email: string;
-  password: string;
-}
-
+import { LoginRequest} from '../models/login-request.model';
+import { RegisterRequest } from '../models/register-request.model';
 @Injectable({
   providedIn: 'root'
 })

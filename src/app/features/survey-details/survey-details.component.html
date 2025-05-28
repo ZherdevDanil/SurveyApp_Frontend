@@ -1,0 +1,34 @@
+<h2>{{ survey?.title }}</h2>
+<p>{{ survey?.description }}</p>
+
+<div *ngFor="let q of survey?.questions; let i = index" class="question-block">
+  <div *ngIf="editedIndex !== i">
+    <p><strong>Питання {{ i + 1 }}:</strong> {{ q.text }} ({{ q.questionType }})</p>
+    <ul>
+      <li *ngFor="let opt of q.options">{{ opt.text }}</li>
+    </ul>
+    <button (click)="editQuestion(i)">Редагувати</button>
+  </div>
+
+  <div *ngIf="editedIndex === i">
+    <input [(ngModel)]="editableQuestion.text" placeholder="Текст питання" />
+    <select [(ngModel)]="editableQuestion.questionType">
+      <option value="TEXT">Текстове</option>
+      <option value="SINGLE_CHOICE">Один варіант</option>
+      <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
+    </select>
+
+    <div *ngIf="editableQuestion.questionType !== 'TEXT'">
+      <div *ngFor="let opt of editableQuestion.options; let j = index">
+        <input [(ngModel)]="editableQuestion.options[j].text" placeholder="Варіант відповіді" />
+        <button (click)="removeOption(j)">Видалити</button>
+      </div>
+      <button (click)="addOption()">Додати варіант</button>
+    </div>
+
+    <button (click)="saveQuestion(i, q.id)">Зберегти</button>
+    <button (click)="cancelEdit()">Скасувати</button>
+  </div>
+</div>
+
+
