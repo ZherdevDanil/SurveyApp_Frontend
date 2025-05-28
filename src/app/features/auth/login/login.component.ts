@@ -20,7 +20,7 @@ export class LoginComponent {
     }).subscribe({
       next: (res) => {
           this.authService.saveToken(res.token);
-          this.router.navigate(['/surveys'])
+          this.router.navigate([''])
       },
           error: (err)=>{
             this.error = 'Неправильні дані для входу';

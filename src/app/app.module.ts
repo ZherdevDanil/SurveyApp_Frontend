@@ -8,10 +8,20 @@ import { SurveysModule } from './features/surveys/surveys.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { HomeComponent } from './features/home/home.component';
+import { MySurveysComponent } from './features/my-surveys/my-surveys.component';
+import { CreateSurveyComponent } from './features/create-survey/create-survey.component';
+import { SurveyPassComponent } from './features/survey-pass/survey-pass.component';
+import { SurveyResultsComponent } from './features/survey-results/survey-results.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    MySurveysComponent,
+    CreateSurveyComponent,
+    SurveyPassComponent,
+    SurveyResultsComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,17 @@
+<div class="home-container">
+  <h1>Сервіс соціальних опитувань</h1>
+
+  <p *ngIf="!authService.isLoggedIn()">
+    Створюй опитування, дізнавайся думки, аналізуй результати.
+    <br />
+    <a routerLink="/register">Зареєструватися</a> або
+    <a routerLink="/login">увійти</a>, щоб почати!
+  </p>
+
+  <div *ngIf="authService.isLoggedIn()">
+    <p>Радий вас бачити!</p>
+    <a routerLink="/my-surveys">→ Перейти до моїх опитувань</a>
+    <br />
+    <a routerLink="/create-survey">→ Створити нове опитування</a>
+  </div>
+</div>
