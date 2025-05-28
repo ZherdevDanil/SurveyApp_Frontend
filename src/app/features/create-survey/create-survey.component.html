@@ -1,0 +1,38 @@
+<h2>Створення опитування</h2>
+
+<form (ngSubmit)="submit()">
+  <label>Назва:
+    <input [(ngModel)]="title" name="title" required />
+  </label>
+
+  <label>
+    <input type="checkbox" [(ngModel)]="requireAuth" name="requireAuth" />
+    Анонімне опитування
+  </label>
+
+  <div *ngFor="let q of questions; let i = index">
+    <h4>Питання {{ i + 1 }}</h4>
+    <input [(ngModel)]="q.text" name="text{{i}}" required placeholder="Текст питання" />
+
+    <select [(ngModel)]="q.type" name="type{{i}}">
+      <option value="TEXT">Текстове</option>
+      <option value="SINGLE_CHOICE">Один варіант</option>
+      <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
+    </select>
+
+    <div *ngIf="q.type !== 'TEXT'">
+      <div *ngFor="let opt of q.options; let j = index">
+        <input [(ngModel)]="q.options![j]" name="option{{i}}-{{j}}" placeholder="Варіант відповіді" />
+        <button type="button" (click)="removeOption(i, j)">Видалити варіант</button>
+      </div>
+      <button type="button" (click)="addOption(i)">Додати варіант</button>
+    </div>
+
+    <button type="button" (click)="removeQuestion(i)">Видалити питання</button>
+    <hr />
+  </div>
+
+  <button type="button" (click)="addQuestion()">Додати питання</button>
+  <button type="submit">Створити</button>
+</form>
+

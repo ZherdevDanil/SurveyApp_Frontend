@@ -11,6 +11,24 @@ export interface Survey {
   createdAt: string;
 }
 
+
+export interface CreateSurveyRequest {
+  title: string;
+  description:string;
+  requireAuth: boolean;
+  questions: QuestionRequest[],
+
+
+}
+
+export interface QuestionRequest {
+  text: string;
+  type: 'TEXT' | 'SINGLE_CHOICE' | 'MULTIPLE_CHOICE';
+  position: number;
+  options?: string[];
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -25,4 +43,9 @@ export class SurveyService {
   getMySurveys(): Observable<Survey[]> {
     return this.http.get<Survey[]>(`${this.baseUrl}`);
   }
+
+  createSurvey(request: CreateSurveyRequest): Observable<any> {
+  return this.http.post(`${this.baseUrl}`, request);
+}
+
 }
