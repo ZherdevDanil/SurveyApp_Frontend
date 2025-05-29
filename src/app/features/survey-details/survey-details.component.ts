@@ -13,6 +13,13 @@ export class SurveyDetailsComponent implements OnInit{
 survey?: Survey;
   editedIndex: number | null = null;
   editableQuestion: any = null;
+  newQuestionVisible: boolean = false;
+  newQuestion: any = {
+    text: '',
+    type: 'TEXT',
+    options: []
+  };
+
 
   constructor(private route: ActivatedRoute, private surveyService: SurveyService) {}
 
@@ -29,7 +36,7 @@ survey?: Survey;
     const original = this.survey!.questions[index];
     this.editableQuestion = {
       text: original.text,
-      questionType: original.questionType,
+      type: original.type,
       options: original.options?.map((o: any) => ({ text: o.text, position: o.position })) || []
     };
   }
@@ -50,19 +57,55 @@ survey?: Survey;
   saveQuestion(index: number, questionId: number): void {
     const request = {
       text: this.editableQuestion.text,
-      type: this.editableQuestion.questionType,
+      type: this.editableQuestion.type,
       position: index,
-      options: this.editableQuestion.questionType === 'TEXT' ? [] : this.editableQuestion.options
+      options: this.editableQuestion.type === 'TEXT' ? [] : this.editableQuestion.options
     };
 
     this.surveyService.updateQuestion(questionId, request).subscribe({
       next: () => {
         this.survey!.questions[index].text = request.text;
-        this.survey!.questions[index].questionType = request.type;
+        this.survey!.questions[index].type = request.type;
         this.survey!.questions[index].options = request.options;
         this.cancelEdit();
       },
       error: err => console.error('Помилка збереження питання', err)
     });
   }
+
+
+
+  showNewQuestionForm(): void {
+  this.newQuestionVisible = true;
+  this.newQuestion = {
+    text: '',
+    type: 'TEXT',
+    options: []
+  };
+}
+
+addNewOption(): void {
+  this.newQuestion.options.push({ text: '', position: this.newQuestion.options.length });
+}
+
+removeNewOption(index: number): void {
+  this.newQuestion.options.splice(index, 1);
+}
+
+saveNewQuestion(): void {
+  const request = {
+    text: this.newQuestion.text,
+    type: this.newQuestion.type,
+    position: this.survey!.questions.length,
+    options: this.newQuestion.type === 'TEXT' ? [] : this.newQuestion.options
+  };
+
+  this.surveyService.addQuestion(this.survey!.id, request).subscribe({
+    next: (newQ) => {
+      this.survey!.questions.push(newQ);
+      this.newQuestionVisible = false;
+    },
+    error: err => console.error('Помилка додавання питання', err)
+  });
+}
 }

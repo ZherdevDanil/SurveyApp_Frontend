@@ -1,0 +1,42 @@
+<form (ngSubmit)="submitAnswers()">
+  <div *ngFor="let q of survey?.questions">
+    <h4>{{ q.text }}</h4>
+
+    <div *ngIf="q.type === 'TEXT'">
+      <input
+        type="text"
+        [(ngModel)]="answers[q.id]"
+        name="textAnswer{{ q.id }}"
+      />
+    </div>
+
+    <div *ngIf="q.type === 'SINGLE_CHOICE'">
+      <div *ngFor="let opt of q.options">
+        <label>
+          <input
+            type="radio"
+            [name]="'radio' + q.id"
+            [value]="opt.id"
+            [(ngModel)]="answers[q.id]"
+          />
+          {{ opt.text }}
+        </label>
+      </div>
+    </div>
+
+    <div *ngIf="q.type === 'MULTIPLE_CHOICE'">
+      <div *ngFor="let opt of q.options">
+        <label>
+          <input
+            type="checkbox"
+            [checked]="answers[q.id]?.includes(opt.id)"
+            (change)="onCheckboxChangeEvent(q.id, opt.id, $event)"
+          />
+          {{ opt.text }}
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit">Надіслати відповіді</button>
+</form>

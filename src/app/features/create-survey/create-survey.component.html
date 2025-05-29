@@ -22,7 +22,7 @@
 
     <div *ngIf="q.type !== 'TEXT'">
       <div *ngFor="let opt of q.options; let j = index">
-        <input [(ngModel)]="q.options![j]" name="option{{i}}-{{j}}" placeholder="Варіант відповіді" />
+        <input [(ngModel)]="q.options![j].text" name="option{{i}}-{{j}}" placeholder="Варіант відповіді" />
         <button type="button" (click)="removeOption(i, j)">Видалити варіант</button>
       </div>
       <button type="button" (click)="addOption(i)">Додати варіант</button>

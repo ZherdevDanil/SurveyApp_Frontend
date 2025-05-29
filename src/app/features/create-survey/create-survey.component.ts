@@ -46,7 +46,10 @@ export class CreateSurveyComponent {
 
   addOption(questionIndex: number):void{
     this.questions[questionIndex].options = this.questions[questionIndex].options || [];
-    this.questions[questionIndex].options!.push('');
+    this.questions[questionIndex].options!.push({
+      text: '',
+      position: this.questions[questionIndex].options!.length
+  });
   }
 
   removeOption(questionIndex: number, optionIndex:number):void{
