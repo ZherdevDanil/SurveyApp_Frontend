@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Survey } from '../models/survey.model';
 import { AnswerRequest } from '../models/answer-request.model';
+import { SurveyResultsResponse } from '../models/survey-result.model';
 
 /*export interface Survey {
   id: number;
@@ -18,6 +19,7 @@ export interface CreateSurveyRequest {
   title: string;
   description:string;
   requireAuth: boolean;
+  isPublic: boolean;
   questions: QuestionRequest[],
 
 
@@ -72,7 +74,14 @@ export class SurveyService {
   submitAnswers(answers: AnswerRequest[]): Observable<any>{
     return this.http.post(`http://localhost:8080/api/answers`,answers);
   }
-  
+
+  getSurveyAnalytics(surveyId: number) {
+  return this.http.get<SurveyResultsResponse>(`http://localhost:8080/api/analytics/${surveyId}/results`);
+}
+
+  getPublicSurveys():Observable<any[]>{
+    return this.http.get<any>(`${this.baseUrl}/public`)
+  }
 
 
 }

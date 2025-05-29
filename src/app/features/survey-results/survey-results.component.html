@@ -1,0 +1,70 @@
+<div *ngIf="loading">Завантаження...</div>
+<div *ngIf="error">{{ error }}</div>
+
+<div *ngIf="results">
+  <h2>Аналітика опитування: {{ results.title }}</h2>
+
+  <div *ngFor="let q of results.questionResultResponses">
+    <h4>{{ q.text }}</h4>
+
+    <div *ngIf="q.questionType === 'TEXT'">
+      <ul>
+        <li *ngFor="let ans of q.textAnswers">{{ ans }}</li>
+      </ul>
+    </div>
+
+    <div *ngIf="q.questionType !== 'TEXT'">
+      <ul>
+        <li *ngFor="let stat of q.optionStats">
+          {{ stat.text }} — {{ stat.count }} голосів
+        </li>
+      </ul>
+    </div>
+
+    <hr />
+  </div>
+</div>
+
+<!--<div *ngFor="let q of results.questionResultResponses">
+<div *ngIf="q.questionType !== 'TEXT'">
+  <ngx-charts-pie-chart
+    [view]="[400, 300]"
+    [results]="formatStatsForChart(q.optionStats)"
+    [legend]="true"
+    [labels]="true"
+    [doughnut]="false"
+    [explodeSlices]="false"
+    [animations]="true">
+  </ngx-charts-pie-chart>
+</div>
+</div>-->
+
+<div *ngIf="results?.questionResultResponses">
+  <div *ngFor="let q of results?.questionResultResponses">
+
+    <h3>{{ q.text }}</h3>
+
+    <!-- Діаграма -->
+    <div *ngIf="q.questionType !== 'TEXT' && q.optionStats">
+      <ngx-charts-pie-chart
+        [results]="formatStatsForChart(q.optionStats)"
+        [legend]="true"
+        [labels]="true"
+        [doughnut]="false"
+        [explodeSlices]="false"
+        [animations]="true"
+        [view]="[700, 400]">
+      </ngx-charts-pie-chart>
+    </div>
+
+    <!-- Текстові відповіді -->
+    <div *ngIf="q.questionType === 'TEXT' && q.textAnswers">
+      <h4>Відповіді:</h4>
+      <ul>
+        <li *ngFor="let answer of q.textAnswers">{{ answer }}</li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+

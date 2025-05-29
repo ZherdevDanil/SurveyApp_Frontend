@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AnswerService } from 'src/app/core/services/answer.serveci';
 import { Survey } from 'src/app/core/models/survey.model';
 import { AnswerRequest } from 'src/app/core/models/answer-request.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-survey-pass',
   templateUrl: './survey-pass.component.html',
@@ -20,7 +21,8 @@ surveyId!: number;
   constructor(
     private route: ActivatedRoute,
     private surveyService: SurveyService,
-    private answerService: AnswerService
+    private answerService: AnswerService,
+    public router : Router
   ) {}
 
   ngOnInit(): void {

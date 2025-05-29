@@ -1,3 +1,8 @@
+<div *ngIf="alreadySubmitted">
+  <h3>Дякуємо за проходження опитування!</h3>
+  <button (click)="router.navigate(['/'])">Повернутися на головну</button>
+</div>
+
 <form (ngSubmit)="submitAnswers()">
   <div *ngFor="let q of survey?.questions">
     <h4>{{ q.text }}</h4>
@@ -37,6 +42,7 @@
       </div>
     </div>
   </div>
-
+<div *ngIf="alreadySubmitted==false">
   <button type="submit">Надіслати відповіді</button>
+</div>
 </form>
