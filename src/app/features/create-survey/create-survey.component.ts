@@ -13,6 +13,7 @@ interface CreateFullSurveyRequest {
   title: string;
   description: string;
   requireAuth: boolean;
+  isPublic: boolean;
   questions: CreateQuestionRequest[];
 }
 
@@ -26,6 +27,7 @@ export class CreateSurveyComponent {
   title: string = '';
   description: string = '';
   requireAuth: boolean = false;
+  isPublic: boolean = false;
   questions: QuestionRequest[] = [];
 
   constructor(private surveyService: SurveyService, private router:Router){}
@@ -62,6 +64,7 @@ export class CreateSurveyComponent {
       title: this.title,
       description: this.description,
       requireAuth: this.requireAuth,
+      isPublic: this.isPublic,
       questions: this.questions,
     };
 

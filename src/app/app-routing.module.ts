@@ -9,6 +9,7 @@ import { CreateSurveyComponent } from './features/create-survey/create-survey.co
 import { SurveyPassComponent } from './features/survey-pass/survey-pass.component';
 import { HomeComponent } from './features/home/home.component';
 import { SurveyDetailsComponent } from './features/survey-details/survey-details.component';
+import { PublicSurveysComponent } from './features/public-surveys/public-surveys.component';
 
 const routes: Routes = [
   {path:'login', component: LoginComponent},
@@ -18,6 +19,7 @@ const routes: Routes = [
   {path:'my-surveys',component:MySurveysComponent, canActivate:[AuthGuard]},
   {path:'create-survey',component:CreateSurveyComponent,canActivate:[AuthGuard]},
   {path:'survey-results/:id', component:SurveyResultsComponent, canActivate:[AuthGuard]},
+  {path:'surveys/public',component:PublicSurveysComponent,canActivate:[AuthGuard]},
 
   {path:'survey/:id',component:SurveyPassComponent},
   {path:'survey-details/:id',component:SurveyDetailsComponent, canActivate:[AuthGuard]},

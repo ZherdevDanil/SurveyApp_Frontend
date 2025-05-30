@@ -9,6 +9,10 @@
     <input type="checkbox" [(ngModel)]="requireAuth" name="requireAuth" />
     Анонімне опитування
   </label>
+  <label>
+    <input type="checkbox" [(ngModel)]="isPublic" name="isPublic" />
+    Публічне опитування
+  </label>
 
   <div *ngFor="let q of questions; let i = index">
     <h4>Питання {{ i + 1 }}</h4>

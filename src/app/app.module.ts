@@ -14,6 +14,8 @@ import { CreateSurveyComponent } from './features/create-survey/create-survey.co
 import { SurveyPassComponent } from './features/survey-pass/survey-pass.component';
 import { SurveyResultsComponent } from './features/survey-results/survey-results.component';
 import { SurveyDetailsComponent } from './features/survey-details/survey-details.component';
+import { NgxChartsModule } from '@swimlane/ngx-charts';
+import { PublicSurveysComponent } from './features/public-surveys/public-surveys.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { SurveyDetailsComponent } from './features/survey-details/survey-details
     CreateSurveyComponent,
     SurveyPassComponent,
     SurveyResultsComponent,
-    SurveyDetailsComponent
+    SurveyDetailsComponent,
+    PublicSurveysComponent
   ],
   imports: [
     BrowserModule,
@@ -31,7 +34,8 @@ import { SurveyDetailsComponent } from './features/survey-details/survey-details
     AuthModule,
     SurveysModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxChartsModule
   ],
   providers: [
     {

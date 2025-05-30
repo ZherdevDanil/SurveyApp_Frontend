@@ -1,0 +1,7 @@
+<h2>Публічні опитування</h2>
+<ul>
+  <li *ngFor="let survey of surveys">
+    <a (click)="goToSurvey(survey.id)" style="cursor:pointer;">{{ survey.title }}</a>
+    <p>{{ survey.description }}</p>
+  </li>
+</ul>
