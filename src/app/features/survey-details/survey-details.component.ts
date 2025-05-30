@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CreateSurveyRequest, SurveyService } from 'src/app/core/services/survey.service';
 //import { Survey } from 'src/app/core/services/survey.service';
 import { Survey } from 'src/app/core/models/survey.model';
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-survey-details',
@@ -10,10 +12,11 @@ import { Survey } from 'src/app/core/models/survey.model';
   styleUrls: ['./survey-details.component.css']
 })
 export class SurveyDetailsComponent implements OnInit{
-survey?: Survey;
+  survey?: Survey;
   editedIndex: number | null = null;
   editableQuestion: any = null;
   newQuestionVisible: boolean = false;
+  newDescription: string = '';
   newQuestion: any = {
     text: '',
     type: 'TEXT',
@@ -21,11 +24,11 @@ survey?: Survey;
   };
 
 
-  constructor(private route: ActivatedRoute, private surveyService: SurveyService) {}
+  constructor(private route: ActivatedRoute, private surveyService: SurveyService, private router: Router) {}
 
   ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.surveyService.getSurveyById(id).subscribe({
+    this.surveyService.getSurveyDetailsById(id).subscribe({
       next: data => this.survey = data,
       error: err => console.error('Помилка завантаження опитування', err)
     });
@@ -108,4 +111,32 @@ saveNewQuestion(): void {
     error: err => console.error('Помилка додавання питання', err)
   });
 }
+
+  saveSurveyChanges():void{
+    if (!this.survey) return;
+    const updatedSurvey = {
+      title: this.survey.title,
+      description: this.survey.description,
+      requireAuth: this.survey.requireAuth,
+      public: this.survey.public,
+    };
+    this.surveyService.updateSurvey(this.survey.id,updatedSurvey).subscribe({
+      next: ()=>{
+        alert('Зміни пройшли успішно')
+        this.router.navigate(['/my-surveys'])
+      },error: err=>{
+        if(err.status === 400 || err.status === 409){
+          alert('неможливо редагувати питання, на яке вже надано відповідь')
+        }
+        alert('Помилки при збережені відредагованого опитування')
+      }
+    })
+
+  }
+
+
+  finishSurvey():void{
+    this.surveyService.finishSurvey(this.survey!.id)
+    .subscribe(updated => this.survey = updated);
+  }
 }

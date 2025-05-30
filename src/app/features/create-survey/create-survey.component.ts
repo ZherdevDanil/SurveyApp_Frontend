@@ -29,6 +29,12 @@ export class CreateSurveyComponent {
   requireAuth: boolean = false;
   isPublic: boolean = false;
   questions: QuestionRequest[] = [];
+  //activeFrom:string='';
+  //activeUntil:string='';
+  activeFromDate!:string;
+  activeFromTime!:string;
+  activeUntilDate!:string;
+  activeUntilTime!:string;
 
   constructor(private surveyService: SurveyService, private router:Router){}
 
@@ -60,14 +66,26 @@ export class CreateSurveyComponent {
 
 
   submit(): void {
+    //console.log('>>> activeFrom raw:', this.activeFrom);
+    //console.log('>>> activeUntil raw:', this.activeUntil);
+    //const isoFrom   = this.activeFrom   ? new Date(this.activeFrom).toISOString()   : undefined;
+    //const isoUntil  = this.activeUntil  ? new Date(this.activeUntil).toISOString()  : undefined;
+    const isoFrom = this.activeFromDate && this.activeFromTime ? `${this.activeFromDate}T${this.activeFromTime}:00Z` : undefined;
+    const isoUntil = this.activeUntilDate && this.activeUntilTime ? `${this.activeUntilDate}T${this.activeUntilTime}:00Z` : undefined;
     const request: CreateSurveyRequest = {
       title: this.title,
       description: this.description,
       requireAuth: this.requireAuth,
       isPublic: this.isPublic,
       questions: this.questions,
+      //activeFrom: this.activeFrom ? `${this.activeFrom}:00Z`   : undefined,
+      //activeUntil: this.activeUntil ? `${this.activeUntil}:00Z` : undefined,
+       //...(isoFrom  && { activeFrom:  isoFrom }),
+      //...(isoUntil && { activeUntil: isoUntil })
+      activeFrom: isoFrom,
+      activeUntil: isoUntil
     };
-
+    console.log('>>> payload:', request);
     this.surveyService.createSurvey(request).subscribe({
       next: () => this.router.navigate(['/my-surveys']),
       error: (err) => console.error('Помилка при створенні опитування:', err)

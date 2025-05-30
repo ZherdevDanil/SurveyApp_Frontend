@@ -5,6 +5,10 @@ export interface Survey {
   title: string;
   description: string;
   requireAuth: boolean;
-  anonymous: boolean;
+  public: boolean;
   questions: Question[]; 
+  isActive:boolean;
+  activeFrom:string;
+  activeUntil:string;
+
 }

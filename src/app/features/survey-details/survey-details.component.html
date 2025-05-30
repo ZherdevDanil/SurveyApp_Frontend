@@ -1,13 +1,34 @@
 <h2>{{ survey?.title }}</h2>
-<p>{{ survey?.description }}</p>
+<!--<p>{{ survey?.description }}</p>-->
+<div class="form-group">
+  <label for="description">Опис опитування</label><br>
+  <textarea id="description" [(ngModel)]="survey!.description" name="description" class="form-control"></textarea>
+</div>
+<div>
+  <label>
+    <input type="checkbox" [(ngModel)]="survey!.public" />
+    Публічне опитування
+  </label>
+</div>
 
+<div>
+  <label>
+    <input type="checkbox" [(ngModel)]="survey!.requireAuth" />
+    Потребує авторизації
+  </label>
+</div>
 <div *ngFor="let q of survey?.questions; let i = index" class="question-block">
+  
+
   <div *ngIf="editedIndex !== i">
     <p><strong>Питання {{ i + 1 }}:</strong> {{ q.text }} ({{ q.type }})</p>
     <ul>
       <li *ngFor="let opt of q.options">{{ opt.text }}</li>
     </ul>
-    <button (click)="editQuestion(i)">Редагувати</button>
+    <button [disabled]="!q.canEdit" (click)="editQuestion(i)">Редагувати</button>
+  </div>
+     <div *ngIf="!q.canEdit" class="text-danger">
+    Неможливо редагувати: на питання вже були надані відповіді.
   </div>
 
   <div *ngIf="editedIndex === i">
@@ -28,9 +49,12 @@
 
     <button (click)="saveQuestion(i, q.id)">Зберегти</button>
     <button (click)="cancelEdit()">Скасувати</button>
+
+ 
   </div>
 
   <hr />
+
 </div>
 
 <div>
@@ -57,4 +81,6 @@
 </div>
 
 
+<button class="btn btn-success mt-3" (click)="saveSurveyChanges()">Зберегти зміни</button>
+<button *ngIf="survey?.isActive" class="btn btn-danger" (click)="finishSurvey()">Завершити опитування</button>
 

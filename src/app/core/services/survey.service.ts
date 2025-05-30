@@ -21,6 +21,8 @@ export interface CreateSurveyRequest {
   requireAuth: boolean;
   isPublic: boolean;
   questions: QuestionRequest[],
+  activeFrom?: string,
+  activeUntil?:string
 
 
 }
@@ -57,6 +59,10 @@ export class SurveyService {
       return this.http.get<Survey>(`${this.baseUrl}/${id}`);
   }
 
+  getSurveyDetailsById(id:number): Observable<Survey>{
+    return this.http.get<Survey>(`${this.baseUrl}/survey-details/${id}`)
+  }
+
   updateQuestion(questionId:number, data:QuestionRequest):Observable<any>{
       return this.http.put<any>(`http://localhost:8080/api/questions/${questionId}`,data);
   }
@@ -64,6 +70,9 @@ export class SurveyService {
   addQuestion(surveyId: number, question: any): Observable<any> {
   return this.http.post<any>(`${this.baseUrl}/${surveyId}/questions`, question);
 }
+  updateSurvey(surveyId:number, data:any): Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/${surveyId}`,data)
+  }
 
   checkIfAlreadySubmitted(surveyId:number): Observable<boolean>{
     return this.http.get<boolean>(`http://localhost:8080/api/answers/check`,{
@@ -83,5 +92,8 @@ export class SurveyService {
     return this.http.get<any>(`${this.baseUrl}/public`)
   }
 
+  finishSurvey(surveyId:number):Observable<any>{
+    return this.http.put<any>(`${this.baseUrl}/${surveyId}/finish`,{});
+  }
 
 }

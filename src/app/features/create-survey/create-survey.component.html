@@ -13,6 +13,59 @@
     <input type="checkbox" [(ngModel)]="isPublic" name="isPublic" />
     Публічне опитування
   </label>
+  <div class="form-group">
+    <label for="description">Опис опитування</label><br>
+    <textarea id="description" [(ngModel)]="description" name="description" class="form-control"></textarea>
+  </div>
+  <!--<label>Початок активності:
+    <input
+      type="datetime-local"
+      [(ngModel)]="activeFrom"
+      name="activeFrom" />
+  </label>
+
+  <label>Кінець активності:
+    <input
+      type="datetime-local"
+      [(ngModel)]="activeUntil"
+      name="activeUntil" />
+  </label>-->
+
+  <label>
+  Початок активності:
+  <input
+    type="date"
+    [(ngModel)]="activeFromDate"
+    name="activeFromDate"
+    required
+    class="form-control d-inline-block w-auto"
+  />
+  <input
+    type="time"
+    [(ngModel)]="activeFromTime"
+    name="activeFromTime"
+    required
+    class="form-control d-inline-block w-auto ms-2"
+  />
+</label>
+<label>
+  Кінець активності:
+  <input
+    type="date"
+    [(ngModel)]="activeUntilDate"
+    name="activeUntilDate"
+    required
+    class="form-control d-inline-block w-auto"
+  />
+  <input
+    type="time"
+    [(ngModel)]="activeUntilTime"
+    name="activeUntilTime"
+    required
+    class="form-control d-inline-block w-auto ms-2"
+  />
+</label>
+
 
   <div *ngFor="let q of questions; let i = index">
     <h4>Питання {{ i + 1 }}</h4>
