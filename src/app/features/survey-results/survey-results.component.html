@@ -1,51 +1,19 @@
-<div *ngIf="loading">Завантаження...</div>
-<div *ngIf="error">{{ error }}</div>
-
-<div *ngIf="results">
-  <h2>Аналітика опитування: {{ results.title }}</h2>
-
-  <div *ngFor="let q of results.questionResultResponses">
-    <h4>{{ q.text }}</h4>
-
-    <div *ngIf="q.questionType === 'TEXT'">
-      <ul>
-        <li *ngFor="let ans of q.textAnswers">{{ ans }}</li>
-      </ul>
-    </div>
-
-    <div *ngIf="q.questionType !== 'TEXT'">
-      <ul>
-        <li *ngFor="let stat of q.optionStats">
-          {{ stat.text }} — {{ stat.count }} голосів
-        </li>
-      </ul>
-    </div>
-
-    <hr />
+<div *ngIf="loading" class="text-center py-5">
+  <div class="spinner-border text-secondary" role="status">
+    <span class="visually-hidden">Завантаження...</span>
   </div>
 </div>
 
-<!--<div *ngFor="let q of results.questionResultResponses">
-<div *ngIf="q.questionType !== 'TEXT'">
-  <ngx-charts-pie-chart
-    [view]="[400, 300]"
-    [results]="formatStatsForChart(q.optionStats)"
-    [legend]="true"
-    [labels]="true"
-    [doughnut]="false"
-    [explodeSlices]="false"
-    [animations]="true">
-  </ngx-charts-pie-chart>
-</div>
-</div>-->
+<div *ngIf="error" class="alert alert-danger" role="alert">{{ error }}</div>
 
-<div *ngIf="results?.questionResultResponses">
-  <div *ngFor="let q of results?.questionResultResponses">
+<div *ngIf="results" class="mx-auto" style="max-width: 800px;">
+  <h2 class="mb-4 text-center">Аналітика: {{ results.title }}</h2>
 
-    <h3>{{ q.text }}</h3>
+  <div *ngFor="let q of results.questionResultResponses" class="mb-5">
+    <h5 class="mb-3">{{ q.text }}</h5>
 
-    <!-- Діаграма -->
-    <div *ngIf="q.questionType !== 'TEXT' && q.optionStats">
+    <!-- Діаграма для варіантів -->
+    <div *ngIf="q.questionType !== 'TEXT' && q.optionStats" class="mb-4">
       <ngx-charts-pie-chart
         [results]="formatStatsForChart(q.optionStats)"
         [legend]="true"
@@ -53,18 +21,17 @@
         [doughnut]="false"
         [explodeSlices]="false"
         [animations]="true"
-        [view]="[700, 400]">
+        [view]="[600, 300]"
+      >
       </ngx-charts-pie-chart>
     </div>
 
     <!-- Текстові відповіді -->
     <div *ngIf="q.questionType === 'TEXT' && q.textAnswers">
-      <h4>Відповіді:</h4>
-      <ul>
-        <li *ngFor="let answer of q.textAnswers">{{ answer }}</li>
+      <h6>Відповіді:</h6>
+      <ul class="list-group">
+        <li *ngFor="let ans of q.textAnswers" class="list-group-item">{{ ans }}</li>
       </ul>
     </div>
-
   </div>
 </div>
-

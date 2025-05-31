@@ -1,7 +1,45 @@
-<h2>Вхід</h2>
-<form (ngSubmit)="login()">
-  <input type="text" [(ngModel)]="username" name="username" placeholder="Логін" required />
-  <input type="password" [(ngModel)]="password" name="password" placeholder="Пароль" required />
-  <button type="submit">Увійти</button>
-  <div *ngIf="error" style="color: red;">{{ error }}</div>
-</form>
+<div class="row justify-content-center">
+  <div class="col-md-5 col-lg-4">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-4 text-center">Вхід</h3>
+
+        <form (ngSubmit)="login()">
+          <div class="mb-3">
+            <label for="username" class="form-label">Логін</label>
+            <input
+              id="username"
+              type="text"
+              class="form-control"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Введіть логін"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Пароль</label>
+            <input
+              id="password"
+              type="password"
+              class="form-control"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-primary w-100">
+            Увійти
+          </button>
+
+          <div *ngIf="error" class="alert alert-danger mt-3" role="alert">
+            {{ error }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

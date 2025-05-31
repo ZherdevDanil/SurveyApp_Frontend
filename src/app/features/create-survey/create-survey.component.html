@@ -1,95 +1,179 @@
-<h2>Створення опитування</h2>
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-4 text-center">Створення опитування</h3>
 
-<form (ngSubmit)="submit()">
-  <label>Назва:
-    <input [(ngModel)]="title" name="title" required />
-  </label>
+        <form (ngSubmit)="submit()">
+          <div class="mb-3">
+            <label for="surveyTitle" class="form-label">Назва опитування</label>
+            <input
+              id="surveyTitle"
+              type="text"
+              class="form-control"
+              [(ngModel)]="title"
+              name="title"
+              required
+              placeholder="Введіть назву"
+            />
+          </div>
 
-  <label>
-    <input type="checkbox" [(ngModel)]="requireAuth" name="requireAuth" />
-    Анонімне опитування
-  </label>
-  <label>
-    <input type="checkbox" [(ngModel)]="isPublic" name="isPublic" />
-    Публічне опитування
-  </label>
-  <div class="form-group">
-    <label for="description">Опис опитування</label><br>
-    <textarea id="description" [(ngModel)]="description" name="description" class="form-control"></textarea>
-  </div>
-  <!--<label>Початок активності:
-    <input
-      type="datetime-local"
-      [(ngModel)]="activeFrom"
-      name="activeFrom" />
-  </label>
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="requireAuth"
+              [(ngModel)]="requireAuth"
+              name="requireAuth"
+            />
+            <label class="form-check-label" for="requireAuth">
+              Анонімне опитування
+            </label>
+          </div>
 
-  <label>Кінець активності:
-    <input
-      type="datetime-local"
-      [(ngModel)]="activeUntil"
-      name="activeUntil" />
-  </label>-->
+          <div class="form-check form-switch mb-3">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              id="isPublic"
+              [(ngModel)]="isPublic"
+              name="isPublic"
+            />
+            <label class="form-check-label" for="isPublic">
+              Публічне опитування
+            </label>
+          </div>
 
-  <label>
-  Початок активності:
-  <input
-    type="date"
-    [(ngModel)]="activeFromDate"
-    name="activeFromDate"
-    required
-    class="form-control d-inline-block w-auto"
-  />
-  <input
-    type="time"
-    [(ngModel)]="activeFromTime"
-    name="activeFromTime"
-    required
-    class="form-control d-inline-block w-auto ms-2"
-  />
-</label>
-<label>
-  Кінець активності:
-  <input
-    type="date"
-    [(ngModel)]="activeUntilDate"
-    name="activeUntilDate"
-    required
-    class="form-control d-inline-block w-auto"
-  />
-  <input
-    type="time"
-    [(ngModel)]="activeUntilTime"
-    name="activeUntilTime"
-    required
-    class="form-control d-inline-block w-auto ms-2"
-  />
-</label>
+          <div class="mb-3">
+            <label for="description" class="form-label">Опис опитування</label>
+            <textarea
+              id="description"
+              class="form-control"
+              [(ngModel)]="description"
+              name="description"
+              rows="3"
+            ></textarea>
+          </div>
 
+          <div class="row g-3 mb-4">
+            <div class="col-md-6">
+              <label for="activeFromDate" class="form-label">Початок активності</label>
+              <div class="d-flex">
+                <input
+                  id="activeFromDate"
+                  type="date"
+                  class="form-control me-2"
+                  [(ngModel)]="activeFromDate"
+                  name="activeFromDate"
+                  required
+                />
+                <input
+                  type="time"
+                  class="form-control"
+                  [(ngModel)]="activeFromTime"
+                  name="activeFromTime"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-md-6">
+              <label for="activeUntilDate" class="form-label">Кінець активності</label>
+              <div class="d-flex">
+                <input
+                  id="activeUntilDate"
+                  type="date"
+                  class="form-control me-2"
+                  [(ngModel)]="activeUntilDate"
+                  name="activeUntilDate"
+                  required
+                />
+                <input
+                  type="time"
+                  class="form-control"
+                  [(ngModel)]="activeUntilTime"
+                  name="activeUntilTime"
+                  required
+                />
+              </div>
+            </div>
+          </div>
 
-  <div *ngFor="let q of questions; let i = index">
-    <h4>Питання {{ i + 1 }}</h4>
-    <input [(ngModel)]="q.text" name="text{{i}}" required placeholder="Текст питання" />
+          <div *ngFor="let q of questions; let i = index" class="mb-4">
+            <h5>Питання {{ i + 1 }}</h5>
+            <div class="input-group mb-2">
+              <input
+                type="text"
+                class="form-control"
+                [(ngModel)]="q.text"
+                name="text{{i}}"
+                placeholder="Текст питання"
+                required
+              />
+              <button
+                type="button"
+                class="btn btn-outline-danger"
+                (click)="removeQuestion(i)"
+              >
+                Видалити
+              </button>
+            </div>
 
-    <select [(ngModel)]="q.type" name="type{{i}}">
-      <option value="TEXT">Текстове</option>
-      <option value="SINGLE_CHOICE">Один варіант</option>
-      <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
-    </select>
+            <div class="mb-2">
+              <select
+                class="form-select"
+                [(ngModel)]="q.type"
+                name="type{{i}}"
+              >
+                <option value="TEXT">Текстове</option>
+                <option value="SINGLE_CHOICE">Один варіант</option>
+                <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
+              </select>
+            </div>
 
-    <div *ngIf="q.type !== 'TEXT'">
-      <div *ngFor="let opt of q.options; let j = index">
-        <input [(ngModel)]="q.options![j].text" name="option{{i}}-{{j}}" placeholder="Варіант відповіді" />
-        <button type="button" (click)="removeOption(i, j)">Видалити варіант</button>
+            <div *ngIf="q.type !== 'TEXT'" class="mb-2">
+              <div *ngFor="let opt of q.options; let j = index" class="input-group mb-2">
+                <input
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="q.options![j].text"
+                  name="option{{i}}-{{j}}"
+                  placeholder="Варіант відповіді"
+                  required
+                />
+                <button
+                  type="button"
+                  class="btn btn-outline-danger"
+                  (click)="removeOption(i, j)"
+                >
+                  Видалити
+                </button>
+              </div>
+              <button
+                type="button"
+                class="btn btn-outline-primary"
+                (click)="addOption(i)"
+              >
+                Додати варіант
+              </button>
+            </div>
+
+            <hr />
+          </div>
+
+          <div class="d-flex justify-content-between">
+            <button
+              type="button"
+              class="btn btn-outline-success"
+              (click)="addQuestion()"
+            >
+              Додати питання
+            </button>
+            <button type="submit" class="btn btn-primary">
+              Створити опитування
+            </button>
+          </div>
+        </form>
       </div>
-      <button type="button" (click)="addOption(i)">Додати варіант</button>
     </div>
-
-    <button type="button" (click)="removeQuestion(i)">Видалити питання</button>
-    <hr />
   </div>
-
-  <button type="button" (click)="addQuestion()">Додати питання</button>
-  <button type="submit">Створити</button>
-</form>
-
+</div>

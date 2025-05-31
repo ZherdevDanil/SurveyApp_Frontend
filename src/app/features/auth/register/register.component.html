@@ -1,8 +1,54 @@
-<h2>Реєстрація</h2>
+<div class="row justify-content-center">
+  <div class="col-md-6 col-lg-5">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h3 class="card-title mb-4 text-center">Реєстрація</h3>
 
-<form (submit)="register(); $event.preventDefault()">
-  <input type="text" [(ngModel)]="username" name="username" placeholder="Ім'я користувача" required />
-  <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
-  <input type="password" [(ngModel)]="password" name="password" placeholder="Пароль" required />
-  <button type="submit">Зареєструватися</button>
-</form>
+        <form (ngSubmit)="register()">
+          <div class="mb-3">
+            <label for="reg-username" class="form-label">Логін</label>
+            <input
+              id="reg-username"
+              type="text"
+              class="form-control"
+              [(ngModel)]="username"
+              name="username"
+              placeholder="Введіть логін"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="reg-email" class="form-label">Email</label>
+            <input
+              id="reg-email"
+              type="email"
+              class="form-control"
+              [(ngModel)]="email"
+              name="email"
+              placeholder="example@mail.com"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="reg-password" class="form-label">Пароль</label>
+            <input
+              id="reg-password"
+              type="password"
+              class="form-control"
+              [(ngModel)]="password"
+              name="password"
+              placeholder="••••••••"
+              required
+            />
+          </div>
+
+          <button type="submit" class="btn btn-success w-100">
+            Зареєструватися
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

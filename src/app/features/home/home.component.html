@@ -1,17 +1,23 @@
-<div class="home-container">
-  <h1>Сервіс соціальних опитувань</h1>
+<div class="text-center py-5">
+  <h1 class="display-5 mb-4">Сервіс соціальних опитувань</h1>
 
-  <p *ngIf="!authService.isLoggedIn()">
-    Створюй опитування, дізнавайся думки, аналізуй результати.
-    <br />
-    <a routerLink="/register">Зареєструватися</a> або
-    <a routerLink="/login">увійти</a>, щоб почати!
-  </p>
+  <ng-container *ngIf="!authService.isLoggedIn()">
+    <p class="lead">
+      Створюй опитування, дізнавайся думки, аналізуй результати.
+    </p>
+    <a routerLink="/register" class="btn btn-success me-2">Зареєструватися</a>
+    <a routerLink="/login" class="btn btn-primary">Увійти</a>
+  </ng-container>
 
-  <div *ngIf="authService.isLoggedIn()">
-    <p>Радий вас бачити!</p>
-    <a routerLink="/my-surveys">→ Перейти до моїх опитувань</a>
-    <br />
-    <a routerLink="/create-survey">→ Створити нове опитування</a>
-  </div>
+  <ng-container *ngIf="authService.isLoggedIn()">
+    <p class="lead">Радий вас бачити!</p>
+    <div class="d-grid gap-2 d-md-flex justify-content-center">
+      <a routerLink="/my-surveys" class="btn btn-outline-primary me-md-2">
+        Мої опитування
+      </a>
+      <a routerLink="/create-survey" class="btn btn-primary">
+        Створити опитування
+      </a>
+    </div>
+  </ng-container>
 </div>

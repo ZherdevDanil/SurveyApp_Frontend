@@ -1,86 +1,129 @@
-<h2>{{ survey?.title }}</h2>
-<!--<p>{{ survey?.description }}</p>-->
-<div class="form-group">
-  <label for="description">Опис опитування</label><br>
-  <textarea id="description" [(ngModel)]="survey!.description" name="description" class="form-control"></textarea>
-</div>
-<div>
-  <label>
-    <input type="checkbox" [(ngModel)]="survey!.public" />
-    Публічне опитування
-  </label>
-</div>
+<div class="card mb-4 shadow-sm">
+  <div class="card-body">
+    <h3 class="card-title mb-3">{{ survey?.title }}</h3>
+    <p class="card-text mb-4">{{ survey?.description }}</p>
 
-<div>
-  <label>
-    <input type="checkbox" [(ngModel)]="survey!.requireAuth" />
-    Потребує авторизації
-  </label>
-</div>
-<div *ngFor="let q of survey?.questions; let i = index" class="question-block">
-  
+    <div class="form-check form-switch mb-3">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="publicSwitch"
+        [(ngModel)]="survey!.public"
+      />
+      <label class="form-check-label" for="publicSwitch">
+        Публічне опитування
+      </label>
+    </div>
 
-  <div *ngIf="editedIndex !== i">
-    <p><strong>Питання {{ i + 1 }}:</strong> {{ q.text }} ({{ q.type }})</p>
-    <ul>
-      <li *ngFor="let opt of q.options">{{ opt.text }}</li>
-    </ul>
-    <button [disabled]="!q.canEdit" (click)="editQuestion(i)">Редагувати</button>
-  </div>
-     <div *ngIf="!q.canEdit" class="text-danger">
-    Неможливо редагувати: на питання вже були надані відповіді.
-  </div>
+    <div class="form-check form-switch mb-4">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        id="authSwitch"
+        [(ngModel)]="survey!.requireAuth"
+      />
+      <label class="form-check-label" for="authSwitch">
+        Потребує авторизації
+      </label>
+    </div>
 
-  <div *ngIf="editedIndex === i">
-    <input [(ngModel)]="editableQuestion.text" placeholder="Текст питання" />
-    <select [(ngModel)]="editableQuestion.type">
-      <option value="TEXT">Текстове</option>
-      <option value="SINGLE_CHOICE">Один варіант</option>
-      <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
-    </select>
-
-    <div *ngIf="editableQuestion.type !== 'TEXT'">
-      <div *ngFor="let opt of editableQuestion.options; let j = index">
-        <input [(ngModel)]="editableQuestion.options[j].text" placeholder="Варіант відповіді" />
-        <button (click)="removeOption(j)">Видалити</button>
+    <div *ngFor="let q of survey?.questions; let i = index" class="mb-4">
+      <div *ngIf="editedIndex !== i">
+        <h5 class="mb-1">Питання {{ i + 1 }}:</h5>
+        <p class="mb-2">{{ q.text }} <span class="badge bg-secondary ms-2">{{ q.type }}</span></p>
+        <ul class="list-group mb-2">
+          <li *ngFor="let opt of q.options" class="list-group-item">
+            {{ opt.text }}
+          </li>
+        </ul>
+        <button
+          class="btn btn-outline-primary btn-sm"
+          [disabled]="!q.canEdit"
+          (click)="editQuestion(i)"
+        >
+          Редагувати
+        </button>
+        <div *ngIf="!q.canEdit" class="text-danger mt-2">
+          Неможливо редагувати: на питання вже були надані відповіді.
+        </div>
       </div>
-      <button (click)="addOption()">Додати варіант</button>
+
+      <div *ngIf="editedIndex === i">
+        <div class="input-group mb-2">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="editableQuestion.text"
+            placeholder="Текст питання"
+          />
+          <button class="btn btn-outline-secondary" (click)="cancelEdit()">Скасувати</button>
+        </div>
+        <div class="mb-3">
+          <select class="form-select" [(ngModel)]="editableQuestion.type">
+            <option value="TEXT">Текстове</option>
+            <option value="SINGLE_CHOICE">Один варіант</option>
+            <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
+          </select>
+        </div>
+        <div *ngIf="editableQuestion.type !== 'TEXT'" class="mb-3">
+          <div
+            *ngFor="let opt of editableQuestion.options; let j = index"
+            class="input-group mb-2"
+          >
+            <input
+              type="text"
+              class="form-control"
+              [(ngModel)]="editableQuestion.options[j].text"
+              placeholder="Варіант відповіді"
+            />
+            <button class="btn btn-outline-danger" (click)="removeOption(j)">Видалити</button>
+          </div>
+          <button class="btn btn-outline-primary btn-sm" (click)="addOption()">
+            Додати варіант
+          </button>
+        </div>
+        <button class="btn btn-success me-2" (click)="saveQuestion(i, q.id)">Зберегти</button>
+        <button class="btn btn-secondary" (click)="cancelEdit()">Скасувати</button>
+      </div>
+
+      <hr />
     </div>
 
-    <button (click)="saveQuestion(i, q.id)">Зберегти</button>
-    <button (click)="cancelEdit()">Скасувати</button>
+    <button
+      class="btn btn-outline-success me-2"
+      (click)="showNewQuestionForm()"
+    >
+      Додати питання
+    </button>
 
- 
-  </div>
-
-  <hr />
-
-</div>
-
-<div>
-  <button (click)="showNewQuestionForm()">Додати питання</button>
-</div>
-
-<div *ngIf="newQuestionVisible" class="new-question-form">
-  <input [(ngModel)]="newQuestion.text" placeholder="Текст питання" />
-  <select [(ngModel)]="newQuestion.type">
-    <option value="TEXT">Текстове</option>
-    <option value="SINGLE_CHOICE">Один варіант</option>
-    <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
-  </select>
-
-  <div *ngIf="newQuestion.type !== 'TEXT'">
-    <div *ngFor="let opt of newQuestion.options; let j = index">
-      <input [(ngModel)]="opt.text" placeholder="Варіант відповіді" />
-      <button (click)="removeNewOption(j)">Видалити</button>
+    <div *ngIf="newQuestionVisible" class="mt-3">
+      <div div *ngFor="let opt of newQuestion.options; let j = index" class="input-group mb-2">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="newQuestion.text"
+          placeholder="Текст питання"
+        />
+        <button class="btn btn-outline-danger" (click)="removeNewOption(j)">Видалити</button>
+      </div>
+      <select class="form-select mb-2" [(ngModel)]="newQuestion.type">
+        <option value="TEXT">Текстове</option>
+        <option value="SINGLE_CHOICE">Один варіант</option>
+        <option value="MULTIPLE_CHOICE">Кілька варіантів</option>
+      </select>
+      <button class="btn btn-outline-primary btn-sm" (click)="addNewOption()">
+        Додати варіант
+      </button>
+      <button class="btn btn-success btn-sm mt-2" (click)="saveNewQuestion()">Зберегти питання</button>
     </div>
-    <button (click)="addNewOption()">Додати варіант</button>
+
+    <div class="mt-4">
+      <button class="btn btn-success me-2" (click)="saveSurveyChanges()">
+        Зберегти зміни
+      </button>
+      <button *ngIf="survey?.isActive" class="btn btn-danger" (click)="finishSurvey()">
+        Завершити опитування
+      </button>
+    </div>
   </div>
-
-  <button (click)="saveNewQuestion()">Зберегти питання</button>
 </div>
-
-
-<button class="btn btn-success mt-3" (click)="saveSurveyChanges()">Зберегти зміни</button>
-<button *ngIf="survey?.isActive" class="btn btn-danger" (click)="finishSurvey()">Завершити опитування</button>
-
