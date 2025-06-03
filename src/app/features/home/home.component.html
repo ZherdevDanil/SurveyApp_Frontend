@@ -5,8 +5,8 @@
     <p class="lead">
       Створюй опитування, дізнавайся думки, аналізуй результати.
     </p>
-    <a routerLink="/register" class="btn btn-success me-2">Зареєструватися</a>
-    <a routerLink="/login" class="btn btn-primary">Увійти</a>
+    <a routerLink="/register" class="btn btn-success text-white me-2">Зареєструватися</a>
+    <a routerLink="/login" class="btn btn-primary text-white" >Увійти</a>
   </ng-container>
 
   <ng-container *ngIf="authService.isLoggedIn()">
@@ -15,7 +15,7 @@
       <a routerLink="/my-surveys" class="btn btn-outline-primary me-md-2">
         Мої опитування
       </a>
-      <a routerLink="/create-survey" class="btn btn-primary">
+      <a routerLink="/create-survey" class="btn btn-primary text-white">
         Створити опитування
       </a>
     </div>
