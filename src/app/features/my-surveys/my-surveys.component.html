@@ -14,12 +14,16 @@
       class="list-group-item list-group-item-action d-flex justify-content-between align-items-start"
       style="cursor: pointer;"
     >
-      <div>
+      <div class="flex-grow-1">
         <div class="fw-bold">{{ survey.title }}</div>
         <div class="small text-muted">{{ survey.description }}</div>
       </div>
-      <span class="badge bg-primary rounded-pill">
+      <button class="btn btn-sm btn-primary me-2" (click)="viewResults(survey.id); $event.stopPropagation()">
         Результати
-      </span>
+      </button>
+
+      <button class="btn btn-sm btn-outline-secondary" (click)="copyLink(survey.id); $event.stopPropagation()" title="Скопіювати посилання на опитування">
+        <i class="bi bi-link-45deg">Скопіювати</i>
+      </button>
     </a>
   </div>
