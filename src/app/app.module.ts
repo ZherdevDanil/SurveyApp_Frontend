@@ -16,6 +16,7 @@ import { SurveyResultsComponent } from './features/survey-results/survey-results
 import { SurveyDetailsComponent } from './features/survey-details/survey-details.component';
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PublicSurveysComponent } from './features/public-surveys/public-surveys.component';
+import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { PublicSurveysComponent } from './features/public-surveys/public-surveys
     SurveysModule,
     HttpClientModule,
     FormsModule,
-    NgxChartsModule
+    NgxChartsModule,
+    RecaptchaModule,
+    RecaptchaFormsModule
   ],
   providers: [
     {

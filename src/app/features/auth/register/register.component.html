@@ -43,8 +43,17 @@
               required
             />
           </div>
+          <div class="mb-3">
+            <re-captcha
+              [(ngModel)]="captchaToken"
+              name="recaptcha"
+              [siteKey]="siteKey"
+              (resolved)="onCaptchaResolved($event)"
+            ></re-captcha>
+          </div>
 
-          <button type="submit" class="btn btn-success w-100">
+
+          <button type="submit" class="btn btn-success w-100"  [disabled]="!captchaToken">
             Зареєструватися
           </button>
         </form>

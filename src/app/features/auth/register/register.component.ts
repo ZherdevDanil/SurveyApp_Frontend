@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/core/auth/auth.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-register',
@@ -12,16 +13,30 @@ export class RegisterComponent {
   password: string = '';
   email: string = '';
 
+  captchaToken?:string;
+  error?:string;
+  
+  siteKey = environment.recaptcha.siteKey;
+
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+  onCaptchaResolved(token:string):void{
+    this.captchaToken = token;
+  }
+
   register(): void {
+    if(!this.captchaToken){
+      this.error='Будь ласка, підтвердіть, що ви не робот';
+    }
+
     this.authService.register({
       username: this.username,
       password: this.password,
-      email: this.email
+      email: this.email,
+      recaptchaToken: this.captchaToken
     }).subscribe({
       next: () => {
         alert('Реєстрація успішна!');
