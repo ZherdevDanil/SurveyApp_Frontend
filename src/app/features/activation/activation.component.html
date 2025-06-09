@@ -1,0 +1,6 @@
+ <div class="text-center mt-5">
+  <p *ngIf="loading">Активуємо акаунт…</p>
+  <p *ngIf="!loading && success" class="text-success">Акаунт успішно активовано! Можете увійти.</p>
+  <p *ngIf="!loading && !success" class="text-danger">Щось пішло не так. Токен недійсний.</p>
+  <button *ngIf="!loading" class="btn btn-primary" (click)="goToLogin()">Увійти</button>
+</div>

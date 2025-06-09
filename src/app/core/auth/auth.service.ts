@@ -35,4 +35,19 @@ export class AuthService {
   isLoggedIn(): boolean {
     return !!this.getToken();
   }
+  /*
+  activate(token: string): Observable<any>{
+    return this.http.get(`${this.baseUrl}/activate?token=${token}`)
+  }*/
+
+  activate(token:string):Observable<string>{
+    return this.http.get(
+      `${this.baseUrl}/activate`,
+      {
+        params: { token },
+        responseType: 'text'
+      }
+    );
+  }
+
 }

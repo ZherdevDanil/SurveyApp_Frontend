@@ -17,6 +17,7 @@ import { SurveyDetailsComponent } from './features/survey-details/survey-details
 import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { PublicSurveysComponent } from './features/public-surveys/public-surveys.component';
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
+import { ActivationComponent } from './features/activation/activation.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
     SurveyPassComponent,
     SurveyResultsComponent,
     SurveyDetailsComponent,
-    PublicSurveysComponent
+    PublicSurveysComponent,
+    ActivationComponent
   ],
   imports: [
     BrowserModule,
